@@ -1,0 +1,9 @@
+#********** Initialise & run the game **********
+if __name__ == "__main__":
+    width, height = 800, 600                            # Set screen width,height
+    pygame.init()                                       # Start graphics system
+    pygame.mixer.init()                                 # Start audio system
+    window = pygame.display.set_mode((width, height))   # Create window
+    clock = pygame.time.Clock()                         # Create game clock
+    main()
+    pygame.quit()
