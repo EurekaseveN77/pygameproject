@@ -1,0 +1,30 @@
+import pygame
+pygame.init()
+
+win = pygame.display.set_mode((600,600)) #this is to setr the screen
+
+
+#lets the eneymey walk in both directions
+WalkRight = [pygame.image.load('R1.png'), pygame.image.load('R2.png')]
+WalkLeft  = [pygame.image.load('L1.png'), pygame.image.load('L2.png')]
+
+class enemy(object):
+    WalkRight = [pygame.image.load('R1.png'), pygame.image.load('R2.png')]
+    WalkLeft  = [pygame.image.load('L1.png'), pygame.image.load('L2.png')]
+
+    def __init__(self, x, y, width, height, end):
+        self.x = x
+        self.y = y
+        self.width  = width 
+        self.height = height
+        self.path = [x, end] #here we defined were the enemy starts and ends
+
+        self.WalkCount = 0
+        self.vel = 3
+
+    def drwa(self, win):
+        self.move()
+        if self.WalkCount + 1 >= 8
+            self.WalkCount = 0
+        if self.vel > 0 # if were movingright diplay walking to the right img
+         
