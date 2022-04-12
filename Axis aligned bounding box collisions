@@ -1,0 +1,7 @@
+def is__aabb__collision(self,other):
+  #Axis alligned Bounding Box
+  x_collision=(math.fabs(self.x - other.x) * 2) < (self.width + other.width)
+  y_collision=(math.fabs(self.y - other.y) * 2) < (self.height + other.height)
+  return(x_collision and y_collision)
+
+  
