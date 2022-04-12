@@ -1,0 +1,16 @@
+        #check if my player is inside the boundary
+        if y<0:
+            y=0
+
+    
+        if y >= window.get_height()-50:
+            y = window.get_height()-50
+
+        
+        #to restrict left and right boundary
+        if x<0:
+            x=0
+
+    
+        if x >= window.get_width()-50:
+            x = window.get_width()-50        
