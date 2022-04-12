@@ -1,0 +1,35 @@
+def main():
+    #********** Game variables **********
+    quit = False
+    x=0
+    y=0
+    #********** Start game loop **********
+    while not quit:
+        window.fill((0,0,0))                            # Reset screen to black
+        #********** Process events **********
+        keyspressed = pygame.key.get_pressed()
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                quit = True
+
+        #when a is pressed the player will move left
+        if keyspressed[ord('a')]:
+            x=x-10
+        #when d is pressed the player will move right    
+        if keyspressed[ord('d')]:
+            x=x+10
+        #when w is pressed the player will move up    
+        if keyspressed[ord('w')]:
+            y=y-10
+        #when s is pressed the player will move down
+        if keyspressed[ord('s')]:
+            y=y+10
+        
+
+        #********** Your game logic here **********
+        player=Rect(x,y,50,50)
+        pygame.draw.rect(window,(0,0,255),player)
+
+        #********** Update screen **********
+        pygame.display.update()                         # Actually does the screen update
+        clock.tick(25)           
