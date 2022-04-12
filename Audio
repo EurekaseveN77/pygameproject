@@ -1,0 +1,9 @@
+for this to play the sounds you have to have the audio files downloaded
+
+class Audio():
+  def Powerup();
+    from playsound import playsound
+    playsound ('Reward.mp3')
+  def Jumping():
+    from playsound import playsound
+    playsound('Jump.mp3')
