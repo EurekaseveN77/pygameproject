@@ -68,13 +68,11 @@ class Level:
                     player.direction.y = 0
 
     def runLevel(self):
-        #level tiles
         self.tiles.update(self.world_shift)
         self.tiles.draw(self.display_surface)
         self.scroll_x()
 
     def runPlayer(self):
-        #player
         self.player.update()
         self.horizontal_movement_collision()
         self.vertical_movement_collision()
