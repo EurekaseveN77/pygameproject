@@ -76,6 +76,7 @@ class Level:
                     player.on_ground = True
                 elif player.direction.y < 0:
                     player.rect.top = sprite.rect.bottom
+                    player.direction.y = 0
                     player.on_ceiling = True
         
         if player.on_ground and player.direction.y < 0 or player.direction.y > 1:
