@@ -7,7 +7,6 @@ class Player(pygame.sprite.Sprite):
         self.import_character_assets()
         self.frame_index = 0
         self.animation_speed = 0.15
-        self.image = pygame.Surface((32,64))
         self.image = self.animations['idle'][self.frame_index]
         self.rect = self.image.get_rect(topleft = pos)
         
@@ -20,6 +19,7 @@ class Player(pygame.sprite.Sprite):
     def import_character_assets(self):
         character_path = '../graphics/character/'
         self.animations = {'idle':[],'run':[],'jump':[],'fall':[]}
+        
         for animation in self.animations.keys():
             full_path = character_path + animation
             self.animations[animation] = import_folder(full_path)
