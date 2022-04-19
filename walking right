@@ -1,0 +1,18 @@
+ #IMAGE LOADED IN PLAYER_RIGHT LIST
+    player_right = [
+        pygame.image.load("assets//p2_walk/PNG/p2_walk01.png").convert_alpha(),
+        pygame.image.load("assets//p2_walk/PNG/p2_walk02.png").convert_alpha(),
+        pygame.image.load("assets//p2_walk/PNG/p2_walk03.png").convert_alpha(),
+        pygame.image.load("assets//p2_walk/PNG/p2_walk04.png").convert_alpha(),
+        pygame.image.load("assets//p2_walk/PNG/p2_walk05.png").convert_alpha(),
+        pygame.image.load("assets//p2_walk/PNG/p2_walk06.png").convert_alpha(),
+        pygame.image.load("assets//p2_walk/PNG/p2_walk07.png").convert_alpha(),
+        pygame.image.load("assets//p2_walk/PNG/p2_walk08.png").convert_alpha(),
+        pygame.image.load("assets//p2_walk/PNG/p2_walk09.png").convert_alpha(),
+        pygame.image.load("assets//p2_walk/PNG/p2_walk10.png").convert_alpha(),
+        pygame.image.load("assets//p2_walk/PNG/p2_walk11.png").convert_alpha()
+    ]
+    
+     #list comprehension to scale the images
+    player_right = [pygame.transform.scale(image,(50,70))
+    for image in player_right]   #DRY
