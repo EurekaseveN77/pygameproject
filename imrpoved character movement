@@ -1,0 +1,36 @@
+    player_left_frame = 0   #index tracker of the list
+    player_right_frame=0    #index tracker of the list 
+    player_jump_frame=0     #index tracker of the list
+        
+        
+        #when right arrow is pressed the player will move right    
+        if keyspressed[ord('d')]:
+            x=x+10
+            direction="right"
+
+        #when up arrow is pressed the player will move up    
+        if keyspressed[ord('w')]:
+            #we allow player to jump only when plsyer is at ground
+            if y==y_ground:
+                player_jump_frame=10 # power of jump
+            #y=y-10
+            #direction="jump"
+
+
+        #when down arrow is pressed the player will move down
+        if keyspressed[ord('s')]:
+            pass
+
+        #condition if no keys from keyboard is pressed
+        if sum(keyspressed)==0:
+            direction="stand"
+
+        #checking whether there is jump:
+        if player_jump_frame > 0:
+            y-=10
+            direction="jump"
+            player_jump_frame=player_jump_frame-1 # when player falls
+
+        elif y<y_ground:
+            direction="landing"
+            y=y+10
