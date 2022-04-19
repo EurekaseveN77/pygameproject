@@ -28,7 +28,7 @@ class Player(pygame.sprite.Sprite):
             self.animations[animation] = import_folder(full_path)
 
     def animate(self):
-        animation = self.animations[self.get_status()]
+        animation = self.animations[self.status]
 
         #loop over frame index
         self.frame_index += self.animation_speed

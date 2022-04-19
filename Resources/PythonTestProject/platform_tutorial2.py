@@ -2,8 +2,6 @@ import pygame, sys
 from settings import *
 from level import Level
 
-# !!! TUTORIAL STOPPED AT 27:31 -- need to input 'P' into the level_map to denote player spawn
-
 # Pygame setup
 pygame.init()
 
