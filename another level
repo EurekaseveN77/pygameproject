@@ -1,0 +1,11 @@
+level_0 = {
+        'terrain' : 'Files/levels/0/Level_0_bg_palms.csv',
+        'coins':'Files/levels/0/Level_0_coins.csv',
+        'fg palms':'Files/levels/0/Level_0_fg_palms.csv',
+        'bg palms':'Files/levels/0/Level_0_bg_palms.csv',
+        'crates':'Files/levels/0/Level_0_crates.csv',
+        'enemies':'Files/levels/0/Level_0_enemies.csv',
+        'constraints':'Files/levels/0/Level_0_constraints.csv',
+        'player':'Files/levels/0/Level_0_player.csv',
+        'grass':'Files/levels/0/Level_0_grass.csv'}
+
