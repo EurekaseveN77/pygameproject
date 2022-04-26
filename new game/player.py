@@ -2,8 +2,8 @@ import pygame
 from support import import_folder
 from math import sin
 
-class Player(pygame.sprite.Sprite, change_health):
-    def __init__(self,pos):
+class Player(pygame.sprite.Sprite,):
+    def __init__(self,pos,change_health):
         super().__init__()
         self.import_character_assets()
         self.frame_index = 0
@@ -111,7 +111,7 @@ class Player(pygame.sprite.Sprite, change_health):
     
     def get_damage(self):
         if not self.invincible:
-            self. change_health(-5)
+            self.change_health(-5)
             self.invincible = True
             self.hurt_time = pygame.time.get_ticks()
 

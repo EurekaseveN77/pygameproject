@@ -11,7 +11,7 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 clock = pygame.time.Clock()
 level = Level(level_map, screen)
 class Game:
-        #game atributes
+        #game atribute1s
     def __init__(self):
         self.max_health = 100
         self.cur_health = 100

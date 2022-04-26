@@ -15,11 +15,12 @@ class Level:
 
 
         #player setup
+        #player_layout = import_csv_layout(level_data['player'])
         self.player_setup( change_health)
-
-    def setup_level(self,layout, change_health):
         self.tiles = pygame.sprite.Group()
         self.player = pygame.sprite.GroupSingle()
+    def setup_level(self,layout, change_health):
+        
 
         for row_index,row in enumerate (layout):
                     for col_index,cell in enumerate (row):
