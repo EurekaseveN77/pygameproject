@@ -10,6 +10,7 @@ level_map = [
 '    XXXX  XXXXXX  XX  XXXX  ',
 'XXXXXXXX  XXXXXX  XX  XXXX  ']
 
-tile_size = 64
+vertical_tile_number = 11
+tile_size = 16
 screen_width = 1200
-screen_height = len(level_map) * tile_size
+screen_height = vertical_tile_number * tile_size
