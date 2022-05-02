@@ -3,7 +3,7 @@ from tiles import Tile, StaticTile
 from settings import tile_size, screen_width
 from player import Player
 from particles import ParticleEffect
-from support import import_csv_layout, import_cut_graphic
+from support import import_csv_layout, import_cut_graphics
 
 class Level:
     def __init__(self,level_data,surface):
@@ -14,9 +14,16 @@ class Level:
         self.world_shift = 0
         self.current_x = 0
 
-        # terrain
+        # REMOVE AND EDIT FOR VIDEO
+        self.player = pygame.sprite.GroupSingle()
+
+        # terrain setup
         terrain_layout = import_csv_layout(level_data['terrain'])
         self.terrain_sprites = self.create_tile_group(terrain_layout,'terrain')
+
+        #foreground setup
+        foreground_layout = import_csv_layout(level_data['foreground'])
+        self.foreground_sprites = self.create_tile_group(foreground_layout,'foreground')
 
         # dust
         self.dust_sprite = pygame.sprite.GroupSingle()
@@ -31,10 +38,16 @@ class Level:
                     y = row_index * tile_size
 
                     if type == 'terrain':
-                        terrain_tile_list = import_cut_graphic('Resources/graphics/terrain/terrain_tiles.pngs')
+                        terrain_tile_list = import_cut_graphics('Resources/graphics/terrain/terrain_tiles.png')
                         tile_surface = terrain_tile_list[int(val)]
                         sprite = StaticTile(tile_size,x,y,tile_surface)
-                        sprite_group.add(sprite)
+                    
+                    if type == 'foreground':
+                        foreground_tile_list = import_cut_graphics('Resources/graphics/terrain/terrain_tiles.png')
+                        tile_surface = foreground_tile_list[int(val)]
+                        sprite = StaticTile(tile_size,x,y,tile_surface)
+                    
+                    sprite_group.add(sprite)
 
         return sprite_group
     
@@ -137,11 +150,15 @@ class Level:
         self.dust_sprite.draw(self.display_surface)
 
         #level tiles
-        self.terrain_sprites.draw(self.display_surface)
         self.terrain_sprites.update(self.world_shift)
+        self.terrain_sprites.draw(self.display_surface)
         #self.tiles.update(self.world_shift)
         #self.tiles.draw(self.display_surface)
         self.scroll_x()
+
+        # foreground
+        self.foreground_sprites.update(self.world_shift)
+        self.foreground_sprites.draw(self.display_surface)
 
         #player
         self.player.update()
