@@ -1,4 +1,3 @@
-from re import X
 import pygame
 from support import import_csv_layout
 from settings import tile_size
