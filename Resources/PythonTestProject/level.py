@@ -15,7 +15,11 @@ class Level:
         self.current_x = 0
 
         # REMOVE AND EDIT FOR VIDEO
+        player_layout = import_csv_layout(level_data['player'])
         self.player = pygame.sprite.GroupSingle()
+        self.goal = pygame.sprite.GroupSingle()
+        self.player_setup(player_layout)
+
 
         # terrain setup
         terrain_layout = import_csv_layout(level_data['terrain'])
@@ -51,6 +55,19 @@ class Level:
 
         return sprite_group
     
+    def player_setup(self,layout):
+        for row_index, row in enumerate(layout):
+            for col_index, val in enumerate(row):
+                x = col_index * tile_size
+                y = row_index * tile_size
+                if val == '0':
+                    sprite = Player((x,y),self.display_surface,self.create_jump_particles)
+                    self.player.add(sprite)
+                if val == '1':
+                    hat_surface = pygame.image.load('Resources/graphics/character/hat.png')
+                    sprite = StaticTile(tile_size, x, y, hat_surface)
+                    self.goal.add(sprite)
+
     def create_jump_particles(self,pos):
         if self.player.sprite.facing_right:
             pos -= pygame.math.Vector2(10,5)
@@ -109,7 +126,7 @@ class Level:
         player = self.player.sprite
         player.rect.x += player.direction.x * player.speed
 
-        for sprite in self.tiles.sprites():
+        for sprite in self.terrain_sprites.sprites():
             if sprite.rect.colliderect(player.rect):
                 if player.direction.x < 0:
                     player.rect.left = sprite.rect.right
@@ -129,7 +146,7 @@ class Level:
         player = self.player.sprite
         player.apply_gravity()
 
-        for sprite in self.tiles.sprites():
+        for sprite in self.terrain_sprites.sprites():
             if sprite.rect.colliderect(player.rect):
                 if player.direction.y > 0:
                     player.rect.bottom = sprite.rect.top
