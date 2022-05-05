@@ -1,13 +1,13 @@
 import pygame
-from support import import_csv_layout
+from support import import_csv_layout, import_cut_graphics
 from settings import tile_size
-from tiles import Tile
+from tiles import Tile, StaticTile
 
 class Level:
     def __init__(self,level_data,surface):
         #general setup
         self.display_surface = surface
-        self.world_shift = 0
+        self.world_shift = -5
 
         #terrain setup
         terrain_layout = import_csv_layout(level_data['terrain'])
@@ -23,7 +23,9 @@ class Level:
                     y = row_index * tile_size
 
                     if type =='terrain':
-                        sprite = Tile(tile_size,x,y)
+                        terrain_tile_list = import_cut_graphics('Project/Real_Code/graphics/terrain/terrain_tiles.png')
+                        tile_surface = terrain_tile_list[int(val)]
+                        sprite = StaticTile(tile_size,x,y,tile_surface)
                         sprite_group.add(sprite)
 
         return sprite_group
