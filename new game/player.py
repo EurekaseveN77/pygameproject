@@ -119,7 +119,7 @@ class Player(pygame.sprite.Sprite,):
         if self.invincibilit:
             current_time = pygame.time.get_ticks()
             if current_time - self.hurt_time >= self.invinicibility_duration:
-                self.invincible =- False
+                self.invincible = False
 
     def Wave_Value(self):
        value = sin(pygame.time.get_ticks())
