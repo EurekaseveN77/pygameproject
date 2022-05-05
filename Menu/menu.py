@@ -6,10 +6,11 @@ class Menu():
         self.midW, self.midH = self.game.displayW / 2, self.game.displayH / 2
         self.runDisplay = True
         self.cursorRect = pygame.Rect(0, 0, 20, 20)   #square cursor, then you can put any image inside it
-        self.offset = -100
+        self.offset = -150                             #where arrow appears on x axis
+        self.background = pygame.image.load('City.png') #new
 
     def drawCursor(self):
-        self.game.drawText('->', 15, self.cursorRect.x, self.cursorRect.y)
+        self.game.drawText('->', 50, self.cursorRect.x, self.cursorRect.y)
 
     def blitScreen(self):
         self.game.window.blit(self.game.display, (0,0)) 
@@ -20,9 +21,9 @@ class MainMenu(Menu):
     def __init__(self, game):
         Menu.__init__(self, game)
         self.state = "Start"
-        self.startX, self.startY = self.midW, self.midH + 30
-        self.optionsX, self.optionsY = self.midW, self.midH + 50
-        self.creditsX, self.creditsY = self.midW, self.midH + 70
+        self.startX, self.startY = self.midW, self.midH + 30            
+        self.optionsX, self.optionsY = self.midW, self.midH + 80         
+        self.creditsX, self.creditsY = self.midW, self.midH + 130
         self.cursorRect.midtop = (self.startX + self.offset, self.startY)
 
     def displayMenu(self):
@@ -31,10 +32,11 @@ class MainMenu(Menu):
             self.game.registeredEvents()
             self.checkInput()
             self.game.display.fill(self.game.BLACK)
-            self.game.drawText('Main Menu', 20, self.game.displayW/2, self.game.displayH/2 - 20)
-            self.game.drawText("Start Game", 20, self.startX, self.startY)
-            self.game.drawText("Options", 20, self.optionsX, self.optionsY)
-            self.game.drawText("Credits", 20, self.creditsX, self.creditsY)
+            self.game.display.blit(self.background, (0,0)) #new
+            self.game.drawText('Main Menu', 50, self.game.displayW/2, self.game.displayH/2 - 50)
+            self.game.drawText("Start Game", 40, self.startX, self.startY)
+            self.game.drawText("Options", 40, self.optionsX, self.optionsY)
+            self.game.drawText("Credits", 40, self.creditsX, self.creditsY)
             self.drawCursor()
             self.blitScreen()
 
@@ -76,7 +78,7 @@ class optionsMenu(Menu):
         Menu.__init__(self, game)
         self.state = 'Volume'
         self.volX, self.volY = self.midW, self.midH + 20
-        self.controlsX, self.controlsY = self.midW, self.midH + 40
+        self.controlsX, self.controlsY = self.midW, self.midH + 70
         self.cursorRect.midtop = (self.volX + self.offset, self.volY)   #cursor is alligned to start with volume option
 
     def displayMenu(self):    #Name must match name under init above
@@ -85,9 +87,9 @@ class optionsMenu(Menu):
             self.game.registeredEvents()
             self.checkInput()
             self.game.display.fill(self.game.BLACK)
-            self.game.drawText('Options', 20, self.game.displayW/2, self.game.displayH/2 - 30)
-            self.game.drawText("Volume", 15, self.volX, self.volY)
-            self.game.drawText("Controls", 15, self.controlsX, self.controlsY)
+            self.game.drawText('Options', 50, self.game.displayW/2, self.game.displayH/2 - 60)
+            self.game.drawText("Volume", 40, self.volX, self.volY)
+            self.game.drawText("Controls", 40, self.controlsX, self.controlsY)
             self.drawCursor()
             self.blitScreen()
 
@@ -117,12 +119,12 @@ class creditsMenu(Menu):
                 self.game.currentMenu = self.game.mainMenu
                 self.runDisplay = False
             self.game.display.fill(self.game.BLACK)
-            self.game.drawText('Designed By:', 20, self.game.displayW/2, self.game.displayH/2 - 50)
-            self.game.drawText('Andres Esparza', 15, self.game.displayW/2, self.game.displayH/2)
-            self.game.drawText('Andrew Howard', 15, self.game.displayW/2, self.game.displayH/2+20)
-            self.game.drawText('Carlos A Morales Sierra', 15, self.game.displayW/2, self.game.displayH/2+40)
-            self.game.drawText('James Carton', 15, self.game.displayW/2, self.game.displayH/2+60)
-            self.game.drawText('Luis Hernandez', 15, self.game.displayW/2, self.game.displayH/2+80)
-            self.game.drawText('Tommy Ibrahimi', 15, self.game.displayW/2, self.game.displayH/2+100)
+            self.game.drawText('Designed By:', 50, self.game.displayW/2, self.game.displayH/2 - 150)
+            self.game.drawText('Andres Esparza', 40, self.game.displayW/2, self.game.displayH/2-50)
+            self.game.drawText('Andrew Howard', 40, self.game.displayW/2, self.game.displayH/2)
+            self.game.drawText('Carlos A Morales Sierra', 40, self.game.displayW/2, self.game.displayH/2+50)
+            self.game.drawText('James Carton', 40, self.game.displayW/2, self.game.displayH/2+100)
+            self.game.drawText('Luis Hernandez', 40, self.game.displayW/2, self.game.displayH/2+150)
+            self.game.drawText('Tommy Ibrahimi', 40, self.game.displayW/2, self.game.displayH/2+200)
 
             self.blitScreen()
