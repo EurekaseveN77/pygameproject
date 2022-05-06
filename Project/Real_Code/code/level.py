@@ -42,10 +42,10 @@ class Level:
                         tile_surface = terrain_tile_list[int(val)]
                         sprite = StaticTile(tile_size,x,y,tile_surface)
                         sprite_group.add(sprite)
-                    
+
                     #if type == 'enemies':
                         #sprite = Enemy(tile_size,x,y)
-
+                    
         return sprite_group
     
     #def player_setup(self,layout):
