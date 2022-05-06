@@ -22,6 +22,7 @@ class Level:
         terrain_layout = import_csv_layout(level_data['terrain'])
         self.terrain_sprites = self.create_tile_group(terrain_layout,'terrain')
 
+
         #enemy
         enemy_layout = import_csv_layout(level_data['enemies'])
         self.enemy_sprites = self.create_tile_group(enemy_layout, 'enemies')
@@ -41,12 +42,12 @@ class Level:
                     if type =='terrain':
                         terrain_tile_list = import_cut_graphics('Project/Real_Code/graphics/terrain/terrain_tiles.png')
                         tile_surface = terrain_tile_list[int(val)]
-                        sprite = StaticTile(tile_size,x,y,tile_surface)
-                        sprite_group.add(sprite)
+                        sprite = StaticTile(tile_size,x,y,tile_surface)    
+                        
+                    if type == 'enemies':
+                        sprite = Enemy(tile_size,x,y)
+                    sprite_group.add(sprite)
 
-                    #if type == 'enemies':
-                        #sprite = Enemy(tile_size,x,y)
-                    
         return sprite_group
     
     #def player_setup(self,layout):
@@ -57,8 +58,8 @@ class Level:
                 if val == '0':
                     print('player goes here')
                 if val == '1':
-                    end_surface = pygame.image.load('Project/Real_Code/graphics/character/end.png').convert_alpha
-                    sprite = StaticTile(tile_size,x,y,end_surface)
+                    head_surface = pygame.image.load('Project/Real_Code/graphics/character/head.png').convert_alpha
+                    sprite = StaticTile(tile_size,x,y,head_surface)
                     self.goal.add(sprite)
 
     def run(self):
@@ -70,7 +71,6 @@ class Level:
         #terrain
         self.terrain_sprites.update(self.world_shift)
         self.terrain_sprites.draw(self.display_surface)
-
 
         #enemy
         self.enemy_sprites.update(self.world_shift)
