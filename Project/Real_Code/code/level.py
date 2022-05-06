@@ -78,5 +78,6 @@ class Level:
         #player sprites
         #self.goal.update(self.world_shift)
         #self.goal.draw(self.display_surface)
+        
 
         
