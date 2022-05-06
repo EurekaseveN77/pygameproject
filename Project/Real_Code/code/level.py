@@ -4,6 +4,7 @@ from settings import tile_size
 from tiles import Tile, StaticTile
 from enemy import Enemy
 from decoration import Sky
+from player import Player
 
 class Level:
     def __init__(self,level_data,surface):
