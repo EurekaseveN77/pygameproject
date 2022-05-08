@@ -8,7 +8,7 @@ class UI:
 		self.display_surface = surface 
 
 		# health 
-		self.health_bar = pygame.image.load('../UI/Health_bar.png').convert_alpha()
+		self.health_bar = pygame.image.load('../UI/Bar_health.png').convert_alpha()
 		self.health_bar_topleft = (60,50)
 		self.bar_max_width = 150
 		self.bar_height = 5
