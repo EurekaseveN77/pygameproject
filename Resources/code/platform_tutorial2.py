@@ -2,6 +2,7 @@ import pygame, sys
 from settings import *
 from level import Level
 from game_data import *
+from support import read_save
 
 class Game:
     def __init__(self):
@@ -9,7 +10,7 @@ class Game:
         self.create_level(0)
     
     def create_level(self,current_level):
-        self.level = Level(current_level,screen)
+        self.level = Level(current_level,self.create_level,screen)
 
     def run(self):
         self.level.run()

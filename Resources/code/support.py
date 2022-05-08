@@ -35,3 +35,14 @@ def import_cut_graphics(path):
             cut_tiles.append(new_surf)
 
     return cut_tiles
+
+def read_save():
+    save = open('save.txt', 'r')
+    level = int(save.read())
+    return level
+
+
+def edit_save(level):
+    save = open('Resources/code/save.txt', 'w')
+    save.write("level")
+    return

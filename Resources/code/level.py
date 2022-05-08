@@ -3,11 +3,11 @@ from tiles import Tile, StaticTile
 from settings import tile_size, screen_width
 from player import Player
 from particles import ParticleEffect
-from support import import_csv_layout, import_cut_graphics
+from support import import_csv_layout, import_cut_graphics, edit_save
 from game_data import levels
 
 class Level:
-    def __init__(self,current_level,surface):
+    def __init__(self,current_level,create_level,surface):
 
         # level setup
         self.display_surface = surface
@@ -16,21 +16,22 @@ class Level:
         self.current_x = 0
         self.save_level = 1
         self.current_level = current_level
-        level_data = levels[self.current_level]
+        self.level_data = levels[self.current_level]
+        self.create_level = create_level
 
         # REMOVE AND EDIT FOR VIDEO
-        player_layout = import_csv_layout(level_data['player'])
+        self.player_layout = import_csv_layout(self.level_data['player'])
         self.player = pygame.sprite.GroupSingle()
         self.goal = pygame.sprite.GroupSingle()
-        self.player_setup(player_layout)
+        self.player_setup(self.player_layout)
 
 
         # terrain setup
-        terrain_layout = import_csv_layout(level_data['terrain'])
+        terrain_layout = import_csv_layout(self.level_data['terrain'])
         self.terrain_sprites = self.create_tile_group(terrain_layout,'terrain')
 
         #foreground setup
-        foreground_layout = import_csv_layout(level_data['foreground'])
+        foreground_layout = import_csv_layout(self.level_data['foreground'])
         self.foreground_sprites = self.create_tile_group(foreground_layout,'foreground')
 
         # dust
@@ -168,7 +169,10 @@ class Level:
     def check_win(self):
         if pygame.sprite.spritecollide(self.player.sprite,self.goal,False):
             self.current_level = self.current_level + 1
+            edit_save(self.current_level)
             self.create_level(self.current_level)
+
+
 
     def run(self):
         # dust particles
