@@ -4,15 +4,19 @@ from settings import tile_size, screen_width
 from player import Player
 from particles import ParticleEffect
 from support import import_csv_layout, import_cut_graphics
+from game_data import levels
 
 class Level:
-    def __init__(self,level_data,surface):
+    def __init__(self,current_level,surface):
 
         # level setup
         self.display_surface = surface
         #self.setup_level(level_data)
         self.world_shift = 0
         self.current_x = 0
+        self.save_level = 1
+        self.current_level = current_level
+        level_data = levels[self.current_level]
 
         # REMOVE AND EDIT FOR VIDEO
         player_layout = import_csv_layout(level_data['player'])
@@ -161,6 +165,11 @@ class Level:
         if player.on_ceiling and player.direction.y > 0:
             player.on_ceiling = False
 
+    def check_win(self):
+        if pygame.sprite.spritecollide(self.player.sprite,self.goal,False):
+            self.current_level = self.current_level + 1
+            self.create_level(self.current_level)
+
     def run(self):
         # dust particles
         self.dust_sprite.update(self.world_shift)
@@ -176,6 +185,8 @@ class Level:
         # foreground
         self.foreground_sprites.update(self.world_shift)
         self.foreground_sprites.draw(self.display_surface)
+
+        self.check_win()
 
         #player
         self.player.update()
