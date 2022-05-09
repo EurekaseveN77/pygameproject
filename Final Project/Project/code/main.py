@@ -45,6 +45,11 @@ class Game:
 
 	def change_health(self,amount):
 		self.cur_health += amount
+	
+	def get_pause(self):
+		self.level.toggle_pause()
+		self.status = 'paused'
+		#self.level_bg_music.stop()
 
 	def check_game_over(self):
 		if self.cur_health <= 0:
@@ -59,6 +64,9 @@ class Game:
 	def run(self):
 		if self.status == 'overworld':
 			self.overworld.run()
+
+		#elif self.status == 'paused':
+			#self.level.run()
 		else:
 			self.level.run()
 			self.ui.show_health(self.cur_health,self.max_health)
@@ -76,6 +84,14 @@ while True:
 		if event.type == pygame.QUIT:
 			pygame.quit()
 			sys.exit()
+		if event.type == pygame.KEYDOWN:
+			if event.key == pygame.K_ESCAPE:
+				pygame.quit()
+				sys.exit()
+		if event.type == pygame.KEYDOWN:
+			if event.key == pygame.K_p:
+				game.get_pause()
+
 	
 	screen.fill('grey')
 	game.run()

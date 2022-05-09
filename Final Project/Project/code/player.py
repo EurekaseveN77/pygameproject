@@ -7,7 +7,7 @@ class Player(pygame.sprite.Sprite):
 		super().__init__()
 		self.import_character_assets()
 		self.frame_index = 0
-		self.animation_speed = 0.15
+		self.animation_speed = 0.10
 		self.image = self.animations['idle'][self.frame_index]
 		self.rect = self.image.get_rect(topleft = pos)
 		
@@ -28,6 +28,12 @@ class Player(pygame.sprite.Sprite):
 		# player status
 		self.status = 'idle'
 		self.facing_right = True
+
+		#ATTACKING
+		self.attacking = False
+		self.attack_cooldown = 500
+		self.attack_time = None
+
 		self.on_ground = False
 		self.on_ceiling = False
 		self.on_left = False
@@ -46,7 +52,7 @@ class Player(pygame.sprite.Sprite):
 
 	def import_character_assets(self):
 		character_path = '../graphics/character/'
-		self.animations = {'idle':[],'run':[],'jump':[],'fall':[]}
+		self.animations = {'idle':[],'run':[],'jump':[],'fall':[], 'attack':[]}
 
 		for animation in self.animations.keys():
 			full_path = character_path + animation
@@ -97,20 +103,32 @@ class Player(pygame.sprite.Sprite):
 				self.display_surface.blit(flipped_dust_particle,pos)
 
 	def get_input(self):
-		keys = pygame.key.get_pressed()
 
-		if keys[pygame.K_RIGHT]:
-			self.direction.x = 1
-			self.facing_right = True
-		elif keys[pygame.K_LEFT]:
-			self.direction.x = -1
-			self.facing_right = False
-		else:
-			self.direction.x = 0
+		if not self.attacking:
+			keys = pygame.key.get_pressed()
 
-		if keys[pygame.K_SPACE] and self.on_ground:
-			self.jump()
-			self.create_jump_particles(self.rect.midbottom)
+			if keys[pygame.K_RIGHT]:
+				self.direction.x = 1
+				self.facing_right = True
+			elif keys[pygame.K_LEFT]:
+				self.direction.x = -1
+				self.facing_right = False
+					
+					
+			else:
+				self.direction.x = 0
+					
+			if keys[pygame.K_SPACE] and self.on_ground:
+				self.jump()
+				self.create_jump_particles(self.rect.midbottom)
+					
+			if keys[pygame.K_z] and self.on_ground and self.direction.x == 0 :
+				self.attacking = True
+				self.attack_time = pygame.time.get_ticks()
+				self.status = 'attack'
+				self.current_attack = self.status
+
+			
 
 	def get_status(self):
 		if self.direction.y < 0:
@@ -123,6 +141,30 @@ class Player(pygame.sprite.Sprite):
 			else:
 				self.status = 'idle'
 
+		#ATTACKING		
+		if self.attacking:
+			self.direction.x = 0
+			self.direction.y = 0
+			if not 'attack' in self.status:
+				if 'idle' in self.status:
+					self.status = self.status.replace('idle','attack')
+				else:
+					self.status = self.status + 'attack'
+		else:
+			if 'attack' in self.status:
+				self.status = self.status.replace('attack','')
+
+
+	#ATTACKING
+	def end_attack(self):
+		current_time = pygame.time.get_ticks()
+
+		if self.attacking:
+			if current_time - self.attack_time >= self.attack_cooldown:
+				self.attacking = False
+				if self.current_attack:
+					self.current_attack = None
+					
 	def apply_gravity(self):
 		self.direction.y += self.gravity
 		self.collision_rect.y += self.direction.y
@@ -152,6 +194,7 @@ class Player(pygame.sprite.Sprite):
 	def update(self):
 		self.get_input()
 		self.get_status()
+		self.end_attack()
 		self.animate()
 		self.run_dust_animation()
 		self.invincibility_timer()
