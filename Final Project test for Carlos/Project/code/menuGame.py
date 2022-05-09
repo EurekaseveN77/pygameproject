@@ -20,7 +20,7 @@ class Game():         # self is the reference to the Game class
         self.credits = creditsMenu(self)
         self.currentMenu = self.mainMenu
         pygame.display.set_caption("Knightmare")     #new
-        self.background = pygame.image.load('City.png')     #new
+        self.background = pygame.image.load('Castle2.png')     #new
 
     def gameLoop(self):
         while self.playing:
