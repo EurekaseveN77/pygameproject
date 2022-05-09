@@ -79,22 +79,23 @@ screen = pygame.display.set_mode((screen_width,screen_height))
 clock = pygame.time.Clock()
 game = Game()
 
-while True:
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			pygame.quit()
-			sys.exit()
-		if event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_ESCAPE:
+def startGame():
+	while True:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
 				pygame.quit()
 				sys.exit()
-		if event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_p:
-				game.get_pause()
+			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_ESCAPE:
+					pygame.quit()
+					sys.exit()
+			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_p:
+					game.get_pause()
 
 	
-	screen.fill('grey')
-	game.run()
+		screen.fill('grey')
+		game.run()
 
-	pygame.display.update()
-	clock.tick(60)
+		pygame.display.update()
+		clock.tick(60)
