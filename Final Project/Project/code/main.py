@@ -61,7 +61,8 @@ class Game:
 			self.overworld = Overworld(0,self.max_level,screen,self.create_level)
 			self.status = 'overworld'
 			self.level_bg_music.stop()
-			self.overworld_bg_music.play(loops = -1)
+			self.level_bg_music.play()
+			#self.overworld_bg_music.play(loops = -1)
 	
 	def start_new_game(self):
 		edit_save(0)
