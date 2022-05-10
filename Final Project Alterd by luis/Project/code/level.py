@@ -1,7 +1,7 @@
 import pygame 
 from support import import_csv_layout, import_cut_graphics
 from settings import tile_size, screen_height, screen_width
-from tiles import Tile, StaticTile, Crate, Coin, Palm
+from tiles import Tile, StaticTile, Crate, Palm
 from enemy import Enemy
 from decoration import Sky, Water, Clouds
 from player import Player
@@ -10,14 +10,13 @@ from particles import ParticleEffect
 from game_data import levels
 
 class Level:
-	def __init__(self,current_level,surface,create_overworld,change_coins,change_health):
+	def __init__(self,current_level,surface,create_overworld,change_health):
 		# general setup
 		self.display_surface = surface
 		self.world_shift = 0
 		self.current_x = None
 
 		# audio 
-		self.coin_sound = pygame.mixer.Sound('../audio/effects/coin.wav')
 		self.stomp_sound = pygame.mixer.Sound('../audio/effects/stomp.wav')
 
 		# overworld connection 
@@ -33,7 +32,6 @@ class Level:
 		self.player_setup(player_layout,change_health)
 
 		# user interface 
-		self.change_coins = change_coins
 
 		# dust 
 		self.dust_sprite = pygame.sprite.GroupSingle()
@@ -54,9 +52,6 @@ class Level:
 		crate_layout = import_csv_layout(level_data['crates'])
 		self.crate_sprites = self.create_tile_group(crate_layout,'crates')
 
-		# coins 
-		coin_layout = import_csv_layout(level_data['coins'])
-		self.coin_sprites = self.create_tile_group(coin_layout,'coins')
 
 		# foreground palms 
 		fg_palm_layout = import_csv_layout(level_data['fg palms'])
@@ -107,9 +102,6 @@ class Level:
 					if type == 'crates':
 						sprite = Crate(tile_size,x,y)
 
-					if type == 'coins':
-						if val == '0': sprite = Coin(tile_size,x,y,'../graphics/coins/gold',5)
-						if val == '1': sprite = Coin(tile_size,x,y,'../graphics/coins/silver',1)
 
 					if type == 'fg palms':
 						if val == '0': sprite = Palm(tile_size,x,y,'../graphics/terrain/palm_small',38)
@@ -229,12 +221,6 @@ class Level:
 		if pygame.sprite.spritecollide(self.player.sprite,self.goal,False):
 			self.create_overworld(self.current_level,self.new_max_level)
 			
-	def check_coin_collisions(self):
-		collided_coins = pygame.sprite.spritecollide(self.player.sprite,self.coin_sprites,True)
-		if collided_coins:
-			self.coin_sound.play()
-			for coin in collided_coins:
-				self.change_coins(coin.value)
 
 	def check_enemy_collisions(self):
 		enemy_collisions = pygame.sprite.spritecollide(self.player.sprite,self.enemy_sprites,False)
@@ -282,8 +268,6 @@ class Level:
 			self.grass_sprites.update(self.world_shift)
 			self.grass_sprites.draw(self.display_surface)
 			
-			self.coin_sprites.update(self.world_shift)
-			self.coin_sprites.draw(self.display_surface)
 			
 			self.fg_palm_sprites.update(self.world_shift)
 			self.fg_palm_sprites.draw(self.display_surface)
@@ -303,7 +287,6 @@ class Level:
 			self.check_death()
 			self.check_win()
 			
-			self.check_coin_collisions()
 			self.check_enemy_collisions()
 			
 			self.water.draw(self.display_surface,self.world_shift)
