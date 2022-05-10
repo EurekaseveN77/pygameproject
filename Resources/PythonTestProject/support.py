@@ -36,13 +36,13 @@ def import_cut_graphics(path):
 
     return cut_tiles
 
+
 def read_save():
     save = open('Resources/code/save.txt', 'r')
-    data = save.read()
-    level = int(data, base=10)
+    level = int(save.read())
     return level
 
 def edit_save(level):
     save = open('Resources/code/save.txt', 'w')
-    save.write(str(level))
+    save.write(level)
     return
