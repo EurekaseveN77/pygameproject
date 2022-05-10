@@ -13,6 +13,7 @@ class Game:
 		self.max_health = 100
 		self.cur_health = 100
 
+		self.music_playing = 0
 		
 		# audio 
 		self.level_bg_music = pygame.mixer.Sound('../audio/level_music.wav')
