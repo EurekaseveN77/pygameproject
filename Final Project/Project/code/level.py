@@ -1,5 +1,5 @@
 import pygame 
-from support import import_csv_layout, import_cut_graphics
+from support import import_csv_layout, import_cut_graphics, edit_save
 from settings import tile_size, screen_height, screen_width
 from tiles import Tile, StaticTile, Crate, Coin, Palm
 from enemy import Enemy
@@ -10,7 +10,7 @@ from particles import ParticleEffect
 from game_data import levels
 
 class Level:
-	def __init__(self,current_level,surface,create_overworld,change_coins,change_health):
+	def __init__(self,current_level,surface,create_level,change_coins,change_health):
 		# general setup
 		self.display_surface = surface
 		self.world_shift = 0
@@ -21,10 +21,11 @@ class Level:
 		self.stomp_sound = pygame.mixer.Sound('../audio/effects/stomp.wav')
 
 		# overworld connection 
-		self.create_overworld = create_overworld
+		#self.create_overworld = create_overworld
+		self.create_level = create_level
 		self.current_level = current_level
 		level_data = levels[self.current_level]
-		self.new_max_level = level_data['unlock']
+		#self.new_max_level = level_data['unlock']
 
 		# player 
 		player_layout = import_csv_layout(level_data['player'])
@@ -223,11 +224,13 @@ class Level:
 
 	def check_death(self):
 		if self.player.sprite.rect.top > screen_height:
-			self.create_overworld(self.current_level,0)
+			self.create_level(self.current_level)
 			
 	def check_win(self):
 		if pygame.sprite.spritecollide(self.player.sprite,self.goal,False):
-			self.create_overworld(self.current_level,self.new_max_level)
+			self.current_level += 1
+			edit_save(self.current_level)
+			self.create_level(self.current_level)
 			
 	def check_coin_collisions(self):
 		collided_coins = pygame.sprite.spritecollide(self.player.sprite,self.coin_sprites,True)
