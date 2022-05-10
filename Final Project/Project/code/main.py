@@ -3,6 +3,7 @@ from settings import *
 from level import Level
 from overworld import Overworld
 from ui import UI
+from support import read_save, edit_save
 
 class Game:
 	def __init__(self):
@@ -18,18 +19,20 @@ class Game:
 		self.overworld_bg_music = pygame.mixer.Sound('../audio/overworld_music.wav')
 
 		# overworld creation
-		self.overworld = Overworld(0,self.max_level,screen,self.create_level)
-		self.status = 'overworld'
-		self.overworld_bg_music.play(loops = -1)
+		#self.overworld = Overworld(0,self.max_level,screen,self.create_level)
+		#self.status = 'overworld'
+		#self.overworld_bg_music.play(loops = -1)
+		self.create_level(read_save())
 
 		# user interface 
 		self.ui = UI(screen)
 
 
 	def create_level(self,current_level):
-		self.level = Level(current_level,screen,self.create_overworld,self.change_coins,self.change_health)
+		self.level = Level(current_level,screen,self.create_level,self.change_coins,self.change_health)
 		self.status = 'level'
-		self.overworld_bg_music.stop()
+		#self.overworld_bg_music.stop()
+		self.level_bg_music.stop()
 		self.level_bg_music.play(loops = -1)
 
 	def create_overworld(self,current_level,new_max_level):
@@ -59,15 +62,20 @@ class Game:
 			self.overworld = Overworld(0,self.max_level,screen,self.create_level)
 			self.status = 'overworld'
 			self.level_bg_music.stop()
-			self.overworld_bg_music.play(loops = -1)
+			self.level_bg_music.play(loops = -1)
+			#self.overworld_bg_music.play(loops = -1)
+
+	def start_new_game(self):
+		edit_save(0)
+		self.create_level(0)
 
 	def run(self):
-		if self.status == 'overworld':
-			self.overworld.run()
+		#if self.status == 'overworld':
+			#self.overworld.run()
 
 		#elif self.status == 'paused':
 			#self.level.run()
-		else:
+		#else:
 			self.level.run()
 			self.ui.show_health(self.cur_health,self.max_health)
 			self.ui.show_coins(self.coins)
