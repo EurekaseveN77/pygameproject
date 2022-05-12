@@ -1,4 +1,6 @@
 import pygame
+from main import startGame
+from support import edit_save
 
 class Menu():
     def __init__(self, game):
@@ -146,8 +148,13 @@ class levelsMenu(Menu):
                 pass
         elif self.game.START_KEY:
             if self.state == 'level1':
+                edit_save(0)
+                startGame()
                 pass                      # Andrew place level 1 here or call game from level 1
+                
             elif self.state == 'level2':
+                edit_save(1)
+                startGame()
                 pass                      #level 2 here or call game from level 2
             self.runDisplay = False
 
